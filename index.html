@@ -655,5 +655,279 @@
             }
         });
     </script>
+
+    <!-- Modern Intercom SDK Integration -->
+    <script type="module">
+        // Import Intercom SDK
+        import Intercom from 'https://cdn.skypack.dev/@intercom/messenger-js-sdk';
+
+        // Initialize Intercom with Epic Tech AI branding
+        Intercom({
+            app_id: 'mvbj6qcv',
+            name: 'AI Prompt Studio User',
+            email: '',
+            created_at: Math.floor(Date.now() / 1000),
+            custom_launcher_selector: '.intercom-launcher',
+            hide_default_launcher: false,
+            alignment: 'right',
+            horizontal_padding: 20,
+            vertical_padding: 20,
+            background_color: '#667eea',
+            action_color: '#667eea',
+            user_hash: '', // Add user hash for identity verification if needed
+            company: {
+                name: 'Epic Tech AI',
+                company_id: 'epic-tech-ai'
+            },
+            custom_attributes: {
+                plan: 'trial',
+                source: 'landing-page',
+                interest: 'ai-prompting'
+            }
+        });
+
+        // Enhanced tracking and user experience
+        window.IntercomSDK = Intercom;
+        
+        // Track user journey
+        function trackIntercomEvent(eventName, metadata = {}) {
+            if (window.IntercomSDK) {
+                window.IntercomSDK('trackEvent', eventName, {
+                    ...metadata,
+                    timestamp: new Date().toISOString(),
+                    page: 'ai-prompt-studio-pro-landing'
+                });
+            }
+        }
+
+        // Auto-track page engagement
+        let engagementTimer = 0;
+        setInterval(() => {
+            engagementTimer += 10;
+            if (engagementTimer === 30) {
+                trackIntercomEvent('engaged-30-seconds');
+            } else if (engagementTimer === 60) {
+                trackIntercomEvent('engaged-1-minute');
+            } else if (engagementTimer === 180) {
+                trackIntercomEvent('highly-engaged-3-minutes');
+            }
+        }, 10000);
+
+        // Track scroll depth
+        let maxScrollDepth = 0;
+        window.addEventListener('scroll', () => {
+            const scrollDepth = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+            if (scrollDepth > maxScrollDepth) {
+                maxScrollDepth = scrollDepth;
+                if (scrollDepth >= 25 && scrollDepth < 50) {
+                    trackIntercomEvent('scrolled-25-percent');
+                } else if (scrollDepth >= 50 && scrollDepth < 75) {
+                    trackIntercomEvent('scrolled-50-percent');
+                } else if (scrollDepth >= 75) {
+                    trackIntercomEvent('scrolled-75-percent');
+                }
+            }
+        });
+
+        // Export for global access
+        window.trackIntercomEvent = trackIntercomEvent;
+    </script>
+
+    <!-- Fallback for browsers that don't support ES modules -->
+    <script nomodule>
+        // Traditional Intercom integration for older browsers
+        window.intercomSettings = {
+            api_base: "https://widget.intercom.io",
+            app_id: "mvbj6qcv",
+            name: "AI Prompt Studio User",
+            email: "",
+            created_at: Math.floor(Date.now() / 1000),
+            background_color: '#667eea',
+            action_color: '#667eea'
+        };
+        
+        (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/mvbj6qcv';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+    </script>
+
+    <!-- Custom Chatbot Styling -->
+    <style>
+        /* Custom Intercom styling to match Epic Tech AI branding */
+        .intercom-lightweight-app {
+            z-index: 2147483001 !important;
+        }
+        
+        .intercom-launcher-frame {
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+            border-radius: 50% !important;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4) !important;
+        }
+        
+        .intercom-launcher-badge {
+            background: #ffd700 !important;
+            color: #333 !important;
+        }
+
+        /* Custom chat trigger button */
+        .chat-trigger {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: none;
+        }
+
+        .chat-trigger:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(102, 126, 234, 0.6);
+        }
+
+        .chat-trigger.show {
+            display: block;
+            animation: bounceIn 0.5s ease;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Chat notification */
+        .chat-notification {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            max-width: 250px;
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .chat-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .chat-notification::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid white;
+        }
+    </style>
+
+    <!-- Chat notification and trigger -->
+    <div class="chat-notification" id="chatNotification">
+        <div style="font-weight: 600; color: #667eea; margin-bottom: 5px;">
+            💬 Need help with AI prompts?
+        </div>
+        <div style="font-size: 14px; color: #666;">
+            Chat with our AI expert now!
+        </div>
+    </div>
+
+    <button class="chat-trigger" id="chatTrigger" onclick="openIntercom()">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <script>
+        // Show chat notification after 10 seconds
+        setTimeout(() => {
+            document.getElementById('chatNotification').classList.add('show');
+            document.getElementById('chatTrigger').classList.add('show');
+        }, 10000);
+
+        // Hide notification after 5 seconds
+        setTimeout(() => {
+            document.getElementById('chatNotification').classList.remove('show');
+        }, 15000);
+
+        // Open Intercom chat
+        function openIntercom() {
+            if (window.Intercom) {
+                window.Intercom('show');
+            }
+        }
+
+        // Track user interactions for better support
+        function trackUserAction(action) {
+            if (window.Intercom) {
+                window.Intercom('trackEvent', action, {
+                    page: 'landing-page',
+                    timestamp: new Date().toISOString()
+                });
+            }
+        }
+
+        // Track CTA clicks
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('click', () => {
+                trackUserAction('cta-clicked');
+            });
+        });
+
+        // Track pricing interest
+        document.querySelector('.pricing-card').addEventListener('click', () => {
+            trackUserAction('pricing-viewed');
+        });
+
+        // Auto-open chat for users who scroll to pricing
+        let pricingViewed = false;
+        window.addEventListener('scroll', () => {
+            const pricingSection = document.querySelector('.pricing');
+            const rect = pricingSection.getBoundingClientRect();
+            
+            if (rect.top < window.innerHeight && rect.bottom > 0 && !pricingViewed) {
+                pricingViewed = true;
+                trackUserAction('pricing-section-viewed');
+                
+                // Show helpful chat message
+                setTimeout(() => {
+                    if (window.Intercom) {
+                        window.Intercom('showNewMessage', 
+                            "Hi! I see you're checking out our pricing. I'm here to help answer any questions about AI Prompt Studio Pro! 🚀"
+                        );
+                    }
+                }, 3000);
+            }
+        });
+
+        // Update Intercom settings with user email if available
+        function updateIntercomUser(email, name) {
+            if (window.Intercom) {
+                window.Intercom('update', {
+                    email: email,
+                    name: name || 'AI Prompt Studio User'
+                });
+            }
+        }
+
+        // Boot Intercom when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.Intercom) {
+                window.Intercom('boot', window.intercomSettings);
+            }
+        });
+    </script>
 </body>
 </html>
