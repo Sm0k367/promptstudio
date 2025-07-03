@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prompt Studio Pro - Master AI Prompting | Epic Tech AI</title>
+    <meta name="description" content="The ultimate AI prompt engineering platform. 2000+ prompts, visual builder, A/B testing, team collaboration. Transform your AI results today!">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 800;
+            color: #667eea;
+        }
+
+        .logo i {
+            font-size: 28px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .stat {
+            text-align: center;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ffd700;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .hero-visual {
+            position: relative;
+        }
+
+        .prompt-demo {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .prompt-input {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 10px;
+            padding: 15px;
+            width: 100%;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .prompt-output {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 60px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f8f9ff, #e8f2ff);
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 30px;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .price {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #667eea;
+            margin: 20px 0;
+        }
+
+        .price-period {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 40px 0;
+        }
+
+        .features-list li {
+            padding: 10px 0;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .features-list i {
+            color: #4CAF50;
+            font-size: 1.2rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .testimonial {
+            background: #f8f9ff;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .testimonial-role {
+            color: #667eea;
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .final-cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            text-align: center;
+            color: white;
+        }
+
+        .final-cta h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .final-cta p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .cta-button-large {
+            background: white;
+            color: #667eea;
+            padding: 20px 50px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button-large:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer p {
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .final-cta h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <i class="fas fa-brain"></i>
+                    <div>
+                        <div>AI Prompt Studio Pro</div>
+                        <div style="font-size: 12px; opacity: 0.7;">Powered by Epic Tech AI</div>
+                    </div>
+                </div>
+                <a href="#pricing" class="cta-button">Start Free Trial</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero gradient-bg">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Master AI Prompting <span class="highlight">Like a Pro</span></h1>
+                    <p>The ultimate AI prompt engineering platform with 2000+ prompts, visual builder, A/B testing, and team collaboration. Transform your AI results today!</p>
+                    
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <div class="stat-number">2000+</div>
+                            <div class="stat-label">Expert Prompts</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">95%</div>
+                            <div class="stat-label">Success Rate</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">10x</div>
+                            <div class="stat-label">Faster Results</div>
+                        </div>
+                    </div>
+
+                    <a href="#pricing" class="cta-button-large">🚀 Start Your Free Trial</a>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="prompt-demo">
+                        <div style="color: white; font-weight: 600; margin-bottom: 15px;">
+                            <i class="fas fa-magic"></i> Live Prompt Demo
+                        </div>
+                        <input type="text" class="prompt-input" value="Write a compelling product description for..." readonly>
+                        <div class="prompt-output">
+                            ✨ <strong>AI Output:</strong><br>
+                            "Introducing the revolutionary SmartWatch Pro - where cutting-edge technology meets elegant design. Experience seamless connectivity, advanced health monitoring, and all-day battery life in one stunning device..."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Powerful Features</h2>
+            <p class="section-subtitle">Everything you need to master AI prompting and boost your productivity</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>2000+ Prompt Library</h3>
+                    <p>Access our curated collection of high-performing prompts across all industries and use cases. Searchable, categorized, and constantly updated.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Visual Prompt Builder</h3>
+                    <p>Create perfect prompts with our drag-and-drop interface. No coding required - just point, click, and generate amazing results.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>A/B Testing Suite</h3>
+                    <p>Compare prompt performance with built-in testing tools. Optimize your results with data-driven insights and analytics.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Team Collaboration</h3>
+                    <p>Share prompts, collaborate on projects, and manage team access. Perfect for agencies and enterprise teams.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-analytics"></i>
+                    </div>
+                    <h3>Performance Analytics</h3>
+                    <p>Track success rates, response times, and ROI. Get detailed insights into what works best for your specific needs.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3>API Integration</h3>
+                    <p>Connect with your existing workflows through our robust API. Seamlessly integrate with popular tools and platforms.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Simple, Transparent Pricing</h2>
+            <p class="section-subtitle">Everything you need to become an AI prompting expert</p>
+
+            <div class="pricing-card">
+                <h3 style="font-size: 1.5rem; color: #667eea; font-weight: 700;">Professional Plan</h3>
+                <div class="price">$15.99</div>
+                <div class="price-period">per month</div>
+
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i> 2000+ Expert Prompts</li>
+                    <li><i class="fas fa-check"></i> Visual Prompt Builder</li>
+                    <li><i class="fas fa-check"></i> A/B Testing Suite</li>
+                    <li><i class="fas fa-check"></i> Team Collaboration</li>
+                    <li><i class="fas fa-check"></i> Performance Analytics</li>
+                    <li><i class="fas fa-check"></i> API Access</li>
+                    <li><i class="fas fa-check"></i> Priority Support</li>
+                    <li><i class="fas fa-check"></i> 7-Day Free Trial</li>
+                </ul>
+
+                <a href="https://buy.stripe.com/dR6dRZ5yc5yPaVq9AE" class="cta-button-large">Start Free Trial</a>
+                
+                <p style="margin-top: 20px; color: #666; font-size: 0.9rem;">
+                    💰 30-day money-back guarantee<br>
+                    🔒 Cancel anytime, no questions asked
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Users Say</h2>
+            <p class="section-subtitle">Join thousands of professionals who've transformed their AI results</p>
+
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "AI Prompt Studio Pro increased my content quality by 300%. The prompt library is incredible and saves me hours every day."
+                    </div>
+                    <div class="testimonial-author">Sarah Chen</div>
+                    <div class="testimonial-role">Content Marketing Manager</div>
+                </div>
+
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "The A/B testing feature helped us optimize our customer service responses. Our satisfaction scores went up 40%!"
+                    </div>
+                    <div class="testimonial-author">Mike Rodriguez</div>
+                    <div class="testimonial-role">Customer Success Director</div>
+                </div>
+
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "As a developer, the API integration is seamless. We've automated our entire content pipeline with their prompts."
+                    </div>
+                    <div class="testimonial-author">Alex Thompson</div>
+                    <div class="testimonial-role">Lead Developer</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Ready to Master AI Prompting?</h2>
+            <p>Join thousands of professionals who've transformed their AI results with our platform</p>
+            <a href="https://buy.stripe.com/dR6dRZ5yc5yPaVq9AE" class="cta-button-large">🚀 Start Your Free Trial Now</a>
+            <p style="margin-top: 20px; opacity: 0.8;">7-day free trial • No credit card required • Cancel anytime</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 AI Prompt Studio Pro. Powered by Epic Tech AI. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>
